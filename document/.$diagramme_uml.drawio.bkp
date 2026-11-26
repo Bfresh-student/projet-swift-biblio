@@ -1,0 +1,122 @@
+<mxfile host="app.diagrams.net" modified="2026-11-25T23:30:00.000Z" agent="Antigravity" version="24.7.17" type="device">
+  <diagram id="uml-bibliotheque" name="Diagramme de Classes UML">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1160" pageHeight="540" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Classe Bibliotheque -->
+        <mxCell id="class-bibliotheque" value="Bibliotheque" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="60" y="60" width="280" height="122" as="geometry" />
+        </mxCell>
+        <mxCell id="class-bibliotheque-attrs" value="- catalogue: [Livre]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="class-bibliotheque">
+          <mxGeometry y="26" width="280" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="class-bibliotheque-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#d6b656;" vertex="1" parent="class-bibliotheque">
+          <mxGeometry y="54" width="280" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="class-bibliotheque-methods" value="+ ajouterLivre(_ livre: Livre): Void&lt;br&gt;+ afficherCatalogue(): Void&lt;br&gt;+ rechercherLivre(titre: String): Livre?" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="class-bibliotheque">
+          <mxGeometry y="62" width="280" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Classe Livre -->
+        <mxCell id="class-livre" value="Livre" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="450" y="45" width="260" height="154" as="geometry" />
+        </mxCell>
+        <mxCell id="class-livre-attrs" value="- titre: String&lt;br&gt;- auteur: String&lt;br&gt;- estDisponible: Bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="class-livre">
+          <mxGeometry y="26" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="class-livre-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#6c8ebf;" vertex="1" parent="class-livre">
+          <mxGeometry y="86" width="260" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="class-livre-methods" value="+ afficherInformations(): Void&lt;br&gt;+ emprunter(): Void&lt;br&gt;+ retourner(): Void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="class-livre">
+          <mxGeometry y="94" width="260" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Classe Adherent -->
+        <mxCell id="class-adherent" value="Adherent" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="830" y="55" width="270" height="138" as="geometry" />
+        </mxCell>
+        <mxCell id="class-adherent-attrs" value="- nom: String&lt;br&gt;- livresEmpruntes: [Livre]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="class-adherent">
+          <mxGeometry y="26" width="270" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="class-adherent-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#82b366;" vertex="1" parent="class-adherent">
+          <mxGeometry y="70" width="270" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="class-adherent-methods" value="+ emprunterLivre(_ livre: Livre): Void&lt;br&gt;+ retournerLivre(_ livre: Livre): Void&lt;br&gt;+ afficherEmprunts(): Void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="class-adherent">
+          <mxGeometry y="78" width="270" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Classe LivrePapier -->
+        <mxCell id="class-livrepapier" value="LivrePapier" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="300" y="300" width="240" height="92" as="geometry" />
+        </mxCell>
+        <mxCell id="class-livrepapier-attrs" value="- nombrePages: Int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="class-livrepapier">
+          <mxGeometry y="26" width="240" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="class-livrepapier-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#6c8ebf;" vertex="1" parent="class-livrepapier">
+          <mxGeometry y="54" width="240" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="class-livrepapier-methods" value="+ afficherInformations(): Void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="class-livrepapier">
+          <mxGeometry y="62" width="240" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Classe LivreNumerique -->
+        <mxCell id="class-livrenumerique" value="LivreNumerique" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="620" y="300" width="240" height="92" as="geometry" />
+        </mxCell>
+        <mxCell id="class-livrenumerique-attrs" value="- tailleFichierMo: Int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="class-livrenumerique">
+          <mxGeometry y="26" width="240" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="class-livrenumerique-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=#6c8ebf;" vertex="1" parent="class-livrenumerique">
+          <mxGeometry y="54" width="240" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="class-livrenumerique-methods" value="+ afficherInformations(): Void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="class-livrenumerique">
+          <mxGeometry y="62" width="240" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Relations -->
+        <!-- Agrégation Bibliotheque (0..1) -> Livre (0..*) -->
+        <mxCell id="rel-biblio-livre" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=0;startSize=12;endArrow=open;endSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="class-bibliotheque" target="class-livre">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-biblio-livre-src" value="0..1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel-biblio-livre">
+          <mxGeometry x="-0.72" y="-12" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel-biblio-livre-tgt" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel-biblio-livre">
+          <mxGeometry x="0.72" y="-12" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Association Adherent (0..1) -> Livre (0..3) -->
+        <mxCell id="rel-adherent-livre" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endSize=10;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="class-adherent" target="class-livre">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-adherent-livre-src" value="0..1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel-adherent-livre">
+          <mxGeometry x="-0.72" y="-12" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel-adherent-livre-tgt" value="0..3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel-adherent-livre">
+          <mxGeometry x="0.72" y="-12" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Héritage LivrePapier -> Livre -->
+        <mxCell id="rel-papier-livre" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=12;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.35;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="class-livrepapier" target="class-livre">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Héritage LivreNumerique -> Livre -->
+        <mxCell id="rel-numerique-livre" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=12;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.65;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="class-livrenumerique" target="class-livre">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

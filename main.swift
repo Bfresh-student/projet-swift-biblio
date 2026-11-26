@@ -1,108 +1,178 @@
 import Foundation
 
-print("==========================================")
-print("     TESTS DU SYSTÈME DE BIBLIOTHÈQUE     ")
-print("==========================================\n")
+// --- Utilitaires de saisie ---
+func lireTexte(_ message: String) -> String {
+    print(message, terminator: "")
+    fflush(stdout)
+    return readLine()?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+}
 
-// ==========================================
-// 1. Initialisation de la bibliothèque
-// ==========================================
+func lireTexteNonVide(_ message: String) -> String {
+    while true {
+        let saisie = lireTexte(message)
+        if !saisie.isEmpty {
+            return saisie
+        }
+        print("Saisie vide. Veuillez réessayer.")
+    }
+}
+
+func lireEntierPositif(_ message: String) -> Int {
+    while true {
+        let saisie = lireTexte(message)
+        if let valeur = Int(saisie), valeur > 0 {
+            return valeur
+        }
+        print("Veuillez entrer un nombre entier strictement positif.")
+    }
+}
+
+func choisirAdherent(_ adherents: [Adherent]) -> Adherent? {
+    if adherents.isEmpty {
+        print("Aucun adhérent enregistré. Veuillez d'abord en créer un.")
+        return nil
+    }
+    print("\nListe des adhérents :")
+    for (index, adherent) in adherents.enumerated() {
+        print("  \(index + 1). \(adherent.getNom()) (\(adherent.getLivresEmpruntes().count)/3 emprunts)")
+    }
+    let saisie = lireTexte("Choisissez un numéro d'adhérent (ou Entrée pour annuler) : ")
+    if saisie.isEmpty { return nil }
+    if let index = Int(saisie), index >= 1, index <= adherents.count {
+        return adherents[index - 1]
+    }
+    print("Sélection invalide.")
+    return nil
+}
+
+// --- Actions du menu ---
+func ajouterLivreInteractif(_ bibliotheque: Bibliotheque) {
+    print("\nType de livre à ajouter :")
+    print("  1. Livre standard")
+    print("  2. Livre papier")
+    print("  3. Livre numérique")
+    let type = lireTexte("Votre choix : ")
+
+    guard ["1", "2", "3"].contains(type) else {
+        print("Type de livre invalide.")
+        return
+    }
+
+    let titre = lireTexteNonVide("Titre : ")
+    let auteur = lireTexteNonVide("Auteur : ")
+
+    switch type {
+    case "1":
+        bibliotheque.ajouterLivre(Livre(titre: titre, auteur: auteur))
+    case "2":
+        let pages = lireEntierPositif("Nombre de pages : ")
+        bibliotheque.ajouterLivre(LivrePapier(titre: titre, auteur: auteur, nombrePages: pages))
+    case "3":
+        let taille = lireEntierPositif("Taille du fichier (Mo) : ")
+        bibliotheque.ajouterLivre(LivreNumerique(titre: titre, auteur: auteur, tailleFichierMo: taille))
+    default:
+        break
+    }
+}
+
+func rechercherLivreInteractif(_ bibliotheque: Bibliotheque) {
+    let titre = lireTexteNonVide("\nTitre du livre à rechercher : ")
+    if let livre = bibliotheque.rechercherLivre(titre: titre) {
+        print("Livre trouvé :")
+        livre.afficherInformations()
+    }
+}
+
+func creerAdherentInteractif(_ adherents: inout [Adherent]) {
+    let nom = lireTexteNonVide("\nNom du nouvel adhérent : ")
+    if adherents.contains(where: { $0.getNom().lowercased() == nom.lowercased() }) {
+        print("Un adhérent nommé \"\(nom)\" existe déjà.")
+        return
+    }
+    adherents.append(Adherent(nom: nom))
+    print("Adhérent \"\(nom)\" créé avec succès.")
+}
+
+func emprunterLivreInteractif(_ bibliotheque: Bibliotheque, _ adherents: [Adherent]) {
+    guard let adherent = choisirAdherent(adherents) else { return }
+    let titre = lireTexteNonVide("Titre du livre à emprunter : ")
+    if let livre = bibliotheque.rechercherLivre(titre: titre) {
+        adherent.emprunterLivre(livre)
+    }
+}
+
+func retournerLivreInteractif(_ bibliotheque: Bibliotheque, _ adherents: [Adherent]) {
+    guard let adherent = choisirAdherent(adherents) else { return }
+    adherent.afficherEmprunts()
+    if adherent.getLivresEmpruntes().isEmpty { return }
+    let titre = lireTexteNonVide("Titre du livre à retourner : ")
+    if let livre = bibliotheque.rechercherLivre(titre: titre) {
+        adherent.retournerLivre(livre)
+    }
+}
+
+func afficherEmpruntsInteractif(_ adherents: [Adherent]) {
+    guard let adherent = choisirAdherent(adherents) else { return }
+    print("")
+    adherent.afficherEmprunts()
+}
+
+// --- Initialisation des données ---
 let bibliotheque = Bibliotheque()
+bibliotheque.ajouterLivre(LivrePapier(titre: "Le Petit Prince", auteur: "Antoine de Saint-Exupéry", nombrePages: 96))
+bibliotheque.ajouterLivre(LivreNumerique(titre: "Swift pour les Débutants", auteur: "Jean Dupont", tailleFichierMo: 15))
+bibliotheque.ajouterLivre(Livre(titre: "1984", auteur: "George Orwell"))
+bibliotheque.ajouterLivre(LivrePapier(titre: "Les Misérables", auteur: "Victor Hugo", nombrePages: 1488))
+bibliotheque.ajouterLivre(LivreNumerique(titre: "Clean Code", auteur: "Robert C. Martin", tailleFichierMo: 8))
 
-let livre1 = LivrePapier(titre: "Le Petit Prince", auteur: "Antoine de Saint-Exupéry", estDisponible: true, nombrePages: 96)
-let livre2 = LivreNumerique(titre: "Swift pour les Débutants", auteur: "Jean Dupont", estDisponible: true, tailleFichierMo: 15)
-let livre3 = Livre(titre: "1984", auteur: "George Orwell", estDisponible: true)
-let livre4 = LivrePapier(titre: "Les Misérables", auteur: "Victor Hugo", estDisponible: true, nombrePages: 1488)
-let livre5 = LivreNumerique(titre: "Clean Code", auteur: "Robert C. Martin", estDisponible: true, tailleFichierMo: 8)
+var adherents: [Adherent] = [
+    Adherent(nom: "Alice"),
+    Adherent(nom: "Bob"),
+    Adherent(nom: "Charlie")
+]
 
-bibliotheque.ajouterLivre(livre1)
-bibliotheque.ajouterLivre(livre2)
-bibliotheque.ajouterLivre(livre3)
-bibliotheque.ajouterLivre(livre4)
-bibliotheque.ajouterLivre(livre5)
-
-// ==========================================
-// 2. Test du Polymorphisme et Affichage Catalogue
-// ==========================================
-print("\n--- TEST 1 : Affichage du catalogue complet (Polymorphisme) ---")
-bibliotheque.afficherCatalogue()
-
-// ==========================================
-// 3. Test de Recherche de livres
-// ==========================================
-print("\n--- TEST 2 : Recherche de livres ---")
-print("Recherche existante (avec minuscules) :")
-if let livreTrouve = bibliotheque.rechercherLivre(titre: "le petit prince") {
-    print(" -> Trouvé ! Auteur : \(livreTrouve.getAuteur())")
-}
-
-print("Recherche inexistante :")
-let livreInconnu = bibliotheque.rechercherLivre(titre: "Livre Inexistant")
-if livreInconnu == nil {
-    print(" -> Résultat conforme : le livre n'a pas été trouvé.")
-}
-
-// ==========================================
-// 4. Test d'Emprunts et Retours Standards
-// ==========================================
-print("\n--- TEST 3 : Emprunts et Retours normaux ---")
-let alice = Adherent(nom: "Alice")
-print("Adhérent : \(alice.getNom())")
-
-alice.emprunterLivre(livre1) // Alice emprunte "Le Petit Prince"
-alice.afficherEmprunts()
-
-print("\nTentative de réemprunter le même livre par Bob :")
-let bob = Adherent(nom: "Bob")
-bob.emprunterLivre(livre1) // Doit échouer car indisponible
-
-print("\nAlice retourne le livre :")
-alice.retournerLivre(livre1)
-alice.afficherEmprunts()
-
-print("\nBob peut maintenant l'emprunter :")
-bob.emprunterLivre(livre1)
-bob.afficherEmprunts()
-
-// ==========================================
-// 5. Test Contrainte : Max 3 emprunts par adhérent
-// ==========================================
-print("\n--- TEST 4 : Limite maximale de 3 livres par adhérent ---")
-let charlie = Adherent(nom: "Charlie")
-
-print("Emprunt 1 :")
-charlie.emprunterLivre(livre2)
-print("Emprunt 2 :")
-charlie.emprunterLivre(livre3)
-print("Emprunt 3 :")
-charlie.emprunterLivre(livre4)
-
-print("\nTentative d'un 4ème emprunt (doit être refusé) :")
-charlie.emprunterLivre(livre5)
-
-print("\nÉtat des emprunts de Charlie :")
-charlie.afficherEmprunts()
-
-// ==========================================
-// 6. Test Retour d'un livre non emprunté
-// ==========================================
-print("\n--- TEST 5 : Tentative de retourner un livre non emprunté ---")
-// Charlie essaie de retourner livre1 (qui est chez Bob)
-charlie.retournerLivre(livre1)
-
-// ==========================================
-// 7. Test des Getters / Setters et Encapsulation
-// ==========================================
-print("\n--- TEST 6 : Getters / Setters et validation ---")
-print("Titre initial : \(livre5.getTitre())")
-livre5.setTitre("Clean Architecture")
-print("Nouveau titre après setter : \(livre5.getTitre())")
-
-print("Taille initiale en Mo : \(livre5.getTailleFichierMo()) Mo")
-livre5.setTailleFichierMo(-5) // Test de validation : valeur négative refusée
-livre5.setTailleFichierMo(12) // Valeur valide
-print("Nouvelle taille valide : \(livre5.getTailleFichierMo()) Mo")
-
+// --- Boucle interactive principale ---
 print("\n==========================================")
-print("           FIN DE TOUS LES TESTS          ")
+print("   GESTIONNAIRE DE BIBLIOTHÈQUE ")
 print("==========================================")
+
+var continuer = true
+while continuer {
+    print("""
+
+    --- MENU PRINCIPAL ---
+    1. Afficher le catalogue
+    2. Rechercher un livre
+    3. Ajouter un livre
+    4. Créer un adhérent
+    5. Emprunter un livre
+    6. Retourner un livre
+    7. Afficher les emprunts d'un adhérent
+    0. Quitter
+    """)
+
+    let choix = lireTexte("Votre choix : ")
+
+    switch choix {
+    case "1":
+        print("")
+        bibliotheque.afficherCatalogue()
+    case "2":
+        rechercherLivreInteractif(bibliotheque)
+    case "3":
+        ajouterLivreInteractif(bibliotheque)
+    case "4":
+        creerAdherentInteractif(&adherents)
+    case "5":
+        emprunterLivreInteractif(bibliotheque, adherents)
+    case "6":
+        retournerLivreInteractif(bibliotheque, adherents)
+    case "7":
+        afficherEmpruntsInteractif(adherents)
+    case "0":
+        continuer = false
+        print("Au revoir !")
+    default:
+        print("Choix invalide. Veuillez entrer un chiffre entre 0 et 7.")
+    }
+}
