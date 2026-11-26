@@ -1,5 +1,10 @@
 # Gestionnaire de Bibliothèque (Swift)
 
+**Réalisé par :**
+- BEAUCHARD Woodney Beker
+- GEORGES Sandasha
+- PIERRE Friztnel
+
 Application console interactive développée en **Swift** permettant de gérer le catalogue d'une bibliothèque, ses adhérents et les emprunts/retours de livres (standards, papier et numériques).
 
 ---

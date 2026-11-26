@@ -1,5 +1,6 @@
 # Rapport de Projet — Système de Gestion de Bibliothèque en Swift
 
+**Réalisé par :** BEAUCHARD Woodney Beker, GEORGES Sandasha, PIERRE Friztnel  
 **Date :** 25 novembre 2026  
 **Langage & Outils :** Swift 6.3.3, PowerShell, draw.io (UML)
 
